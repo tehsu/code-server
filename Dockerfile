@@ -3,17 +3,23 @@ FROM linuxserver/code-server
 RUN sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y gnupg software-properties-common \
     curl apt-transport-https ca-certificates lsb-release unzip python3-pip vim
 
+### Install tfenv for terraform
 RUN git clone https://github.com/tfutils/tfenv.git ~/.tfenv && ln -s ~/.tfenv/bin/* /usr/bin
 
+### Install hugo
 RUN apt-get install -y hugo
 
+### Install helm
 RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" \
+     | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list && \
     sudo apt-get update && \
     sudo apt-get install helm
 
+### Install kubectl
 RUN curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" \
+     | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
     sudo apt-get update && \
     sudo apt-get install -y kubectl
 
@@ -31,4 +37,5 @@ RUN echo \
 RUN sudo apt-get update && \
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
+### Let the default user use docker for DIND
 RUN sudo usermod -aG docker abc
