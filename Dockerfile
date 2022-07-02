@@ -1,7 +1,7 @@
 FROM linuxserver/code-server
 
 RUN sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get install -y gnupg software-properties-common \
-    curl apt-transport-https ca-certificates lsb-release unzip
+    curl apt-transport-https ca-certificates lsb-release unzip python3-pip vim
 
 RUN git clone https://github.com/tfutils/tfenv.git ~/.tfenv && ln -s ~/.tfenv/bin/* /usr/bin
 
