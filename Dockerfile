@@ -9,6 +9,9 @@ RUN git clone https://github.com/tfutils/tfenv.git ~/.tfenv && ln -s ~/.tfenv/bi
 ### Install hugo
 RUN apt-get install -y hugo
 
+### Install adb
+RUN apt-get install -y adb
+
 ### Install helm
 RUN curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" \
